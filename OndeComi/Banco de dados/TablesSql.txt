@@ -1,0 +1,56 @@
+create table avaliador(
+	id serial primary key,
+	nome varchar(100)
+);
+create table bar(
+	id serial primary key,
+	nome varchar(100) not null,
+	endereco varchar(100),
+	preco float,
+	ambiente float,
+	atendimento float,
+	gelada float,
+	drinks float
+);
+create table japones(
+	id serial primary key,
+	nome varchar(100) not null,
+	endereco varchar(100),
+	preco float,
+	ambiente float,
+	atendimento float,
+	variedades float,
+	peixeFresco float
+);
+
+create table hamburgueria(
+	id serial primary key,
+	nome varchar(100) not null,
+	endereco varchar(100),
+	preco float,
+	ambiente float,
+	atendimento float,
+	hamburger float,
+	acompanhamento float
+);
+
+create table avalia_bar(
+	id_avaliador int references avaliador(id),
+	id_bar int references bar(id)
+);
+create table avalia_sushi(
+	id_avaliador int references avaliador(id),
+	id_japones int references japones(id)
+);
+create table avalia_hamburger(
+	id_avaliador int references avaliador(id),
+	id_hamburgueria int references hamburgueria(id)
+);
+
+--Função para pegar a média geral 
+create function mediaGeral(preco float, ambiente float, atendimento float, item1 float, item2 float)
+returns float as $$
+begin
+	return (preco + atendimento + ambiente + item1 + item2)/5;
+end;
+$$ language plpgsql;
